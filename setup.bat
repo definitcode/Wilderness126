@@ -12,6 +12,19 @@ if errorlevel 1 (
     exit /b
 )
 
+where /q java
+if errorlevel 1 (
+    echo You must install Java 17 or newer to proceed: https://adoptium.net/
+    exit /b
+)
+
+for /f tokens^=2-5^ delims^=.-_^" %%j in ('java -fullversion 2^>^&1') do set "jver=%%j%%k%"
+if %jver% lss 170 (
+    echo You must install Java 17 or newer to proceed: https://adoptium.net/
+    echo And it must be your primary Java version!
+    exit /b
+)
+
 if not exist engine (
     goto select
 ) else (
