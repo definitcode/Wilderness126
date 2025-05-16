@@ -32,7 +32,11 @@ if not exist engine (
 
 echo 1. Start
 echo 2. Update
-echo 3. Reconfigure
+if exist engine\.env (
+    echo 3. Reconfigure
+) else (
+    echo 3. Configure
+)
 set /p "action=> "
 
 if %action% == 1 (
@@ -70,26 +74,30 @@ if not exist engine (
     goto selectVer
 )
 
+cd engine
+
 if not exist engine\.env (
-    goto reconfigureProj
+    call npm install
+    call npm run setup
 )
 
-cd engine
 start npm start
 exit
 
 :updateProj
 cd engine
 git pull
+cd ..
 
-cd data\src
+cd content
 git pull
+cd ..
 
-cd ..\..\..
 goto index
 
 :reconfigureProj
 cd engine
+call npm install
 call npm run setup
 cd ..
 goto index

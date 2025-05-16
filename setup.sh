@@ -45,11 +45,11 @@ selectVer () {
 updateProj () {
 	cd engine
 	git pull
+    cd ..
 
-	cd data/src
+	cd content
 	git pull
-
-	cd ../../..
+    cd ..
 }
 
 if [ ! -d engine ]; then
