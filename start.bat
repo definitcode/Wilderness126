@@ -26,11 +26,13 @@ if %jver% lss 170 (
 )
 
 :index
-echo 1. Start
-if exist engine (
-    echo 2. Update
-    echo 3. Reconfigure
+if not exist engine (
+	goto startProj
 )
+
+echo 1. Start
+echo 2. Update
+echo 3. Reconfigure
 set /p "action=> "
 
 if %action% == 1 (
