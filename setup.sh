@@ -34,7 +34,7 @@ selectVer () {
 	if test $rev -eq 225
 	then
 		git clone https://github.com/LostCityRS/Engine-TS engine -b $rev --single-branch
-		git clone https://github.com/LostCityRS/Content engine/data/src -b $rev --single-branch
+		git clone https://github.com/LostCityRS/Content content -b $rev --single-branch
 	else
 		clear
 		echo Invalid input

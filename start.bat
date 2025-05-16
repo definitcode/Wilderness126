@@ -60,7 +60,7 @@ goto selectVer
 
 :downloadVer
 git clone https://github.com/LostCityRS/Engine-TS engine -b %rev% --single-branch
-git clone https://github.com/LostCityRS/Content engine\data\src -b %rev% --single-branch
+git clone https://github.com/LostCityRS/Content content -b %rev% --single-branch
 goto index
 
 :startProj
