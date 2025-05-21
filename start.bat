@@ -12,6 +12,11 @@ if errorlevel 1 (
     exit /b
 )
 
+where /q bun
+if errorlevel 1 (
+    npm i -g bun
+)
+
 where /q java
 if errorlevel 1 (
     echo You must install Java 17 or newer to proceed: https://adoptium.net/
@@ -67,6 +72,7 @@ goto selectVer
 :downloadVer
 git clone https://github.com/LostCityRS/Engine-TS engine -b %rev% --single-branch
 git clone https://github.com/LostCityRS/Content content -b %rev% --single-branch
+git clone https://github.com/LostCityRS/Client-TS webclient -b %rev% --single-branch
 goto index
 
 :startProj
@@ -90,6 +96,10 @@ git pull
 cd ..
 
 cd content
+git pull
+cd ..
+
+cd webclient
 git pull
 cd ..
 
