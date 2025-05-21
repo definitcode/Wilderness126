@@ -17,6 +17,12 @@ if errorlevel 1 (
     npm i -g bun
 )
 
+where /q bun
+if errorlevel 1 (
+    echo You must install Bun to proceed: https://bun.sh
+    exit /b
+)
+
 where /q java
 if errorlevel 1 (
     echo You must install Java 17 or newer to proceed: https://adoptium.net/
@@ -83,11 +89,11 @@ if not exist engine (
 cd engine
 
 if not exist engine\.env (
-    call npm install
-    call npm run setup
+    call bun install
+    call bun run setup
 )
 
-start npm start
+start bun start
 exit
 
 :updateProj
@@ -107,7 +113,7 @@ goto index
 
 :reconfigureProj
 cd engine
-call npm install
-call npm run setup
+call bun install
+call bun run setup
 cd ..
 goto index
