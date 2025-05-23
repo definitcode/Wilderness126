@@ -88,7 +88,7 @@ if not exist engine (
 
 cd engine
 
-if not exist engine\.env (
+if not exist .env (
     call bun install
     call bun run setup
 )
@@ -115,5 +115,6 @@ goto index
 cd engine
 call bun install
 call bun run setup
+
 cd ..
 goto index
