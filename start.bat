@@ -48,6 +48,7 @@ if exist engine\.env (
 ) else (
     echo 3. Configure
 )
+echo 4. Clean and Build
 set /p "action=> "
 
 if %action% == 1 (
@@ -56,6 +57,8 @@ if %action% == 1 (
     goto updateProj
 ) else if %action% == 3 (
     goto reconfigureProj
+) else if %action% == 4 (
+    goto rebuildProj
 )
 
 cls
@@ -115,6 +118,14 @@ goto index
 cd engine
 call bun install
 call bun run setup
+
+cd ..
+goto index
+
+:rebuildProj
+cd engine
+call bun run clean
+call bun run build
 
 cd ..
 goto index
