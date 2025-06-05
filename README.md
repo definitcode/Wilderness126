@@ -54,8 +54,9 @@ This runs the configuration setup script for you again.
 
 This performs a clean and rebuild of the server and client cache. Use this as a common troubleshooting step.
 
-### Build Webclient
+### Build Web Client
 
+**Only needed if you are editing the web client!**  
 This bundles a new webclient and copies it into the server to use. Refresh the client page after building.
 
 ## Common Issues

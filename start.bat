@@ -50,7 +50,8 @@ if exist engine\.env (
     echo 4. Configure Server
 )
 echo 5. Clean-build Server
-echo 6. Build Webclient
+echo 6. Build Web Client
+echo 7. Run Java Client
 set /p "action=> " || cmd /c exit -1073741510
 
 if %action% == 1 (
@@ -64,7 +65,9 @@ if %action% == 1 (
 ) else if %action% == 5 (
     goto rebuildProj
 ) else if %action% == 6 (
-    goto buildClient
+    goto buildWebClient
+) else if %action% == 7 (
+    goto runJavaClient
 )
 
 cls
@@ -88,6 +91,7 @@ goto selectVer
 git clone https://github.com/LostCityRS/Engine-TS engine -b %rev% --single-branch
 git clone https://github.com/LostCityRS/Content content -b %rev% --single-branch
 git clone https://github.com/LostCityRS/Client-TS webclient -b %rev% --single-branch
+git clone https://github.com/LostCityRS/Client-Java javaclient -b %rev% --single-branch
 goto index
 
 :startProj
@@ -121,15 +125,35 @@ call bun run dev
 exit
 
 :updateProj
+if not exist engine (
+    goto selectVer
+)
+
 cd engine
 git pull
 cd ..
+
+if not exist content (
+    goto selectVer
+)
 
 cd content
 git pull
 cd ..
 
+if not exist webclient (
+    goto selectVer
+)
+
 cd webclient
+git pull
+cd ..
+
+if not exist javaclient (
+    goto selectVer
+)
+
+cd javaclient
 git pull
 cd ..
 
@@ -151,11 +175,18 @@ call bun run build
 cd ..
 goto index
 
-:buildClient
+:buildWebClient
 cd webclient
 call bun run build
 copy out\client.js ..\engine\public\client\client.js
 copy out\deps.js ..\engine\public\client\deps.js
+
+cd ..
+goto index
+
+:runJavaClient
+cd javaclient
+call gradlew.bat run --args="10 0 highmem members"
 
 cd ..
 goto index
