@@ -5,6 +5,9 @@
 > [!NOTE]
 > Learn about our history and ethos on our forum: https://lostcity.rs/t/faq-what-is-lost-city/16
 
+This is a higher-level repository that links our other projects. You'll notice it's like home-rolled submodules (without commit references).  
+Github won't include submodules in web downloads, and we have a lot of users who end up clicking download zip.
+
 ## Getting Started
 
 > [!IMPORTANT]
@@ -14,9 +17,9 @@
 2. Install our [dependencies](#dependencies).
 3. Open the folder you downloaded: **Run the start script and follow the on-screen prompts.** You may disregard any severity warnings you see.
 
-Once your setup process has completed, wait for it to tell you the world has started before trying to play.
+Once your setup process has completed, wait for it to tell you the world has started before trying to play at: http://localhost/rs2.cgi
 
-The server includes its own client, so you don't have to download anything else!
+You can press `ctrl + c` to cancel/quit out of a terminal process.
 
 ## Dependencies
 
@@ -29,9 +32,31 @@ The server includes its own client, so you don't have to download anything else!
 
 ## Workflow
 
-Content developers should run `npm start`. The server will watch for changes to scripts and configs, then automatically repack everything.
+**Use the start script provided** - it handles a lot of common use cases. We're trying to reduce the barrier to entry by providing an all-inclusive script.
 
-Engine developers should run `npm run dev`. This does what `npm start` does above, but also completely restarts the server when engine code has changed.
+### Start Server
+
+This should be used by most people. It checks for dependency updates and starts the server normally.
+
+### Start Server (engine dev)
+
+This should be used if you're making changes to .ts files and want the server to restart automatically.
+
+### Update Source
+
+This pulls in the latest changes for our repos.
+
+### (Re)configure Server
+
+This runs the configuration setup script for you again.
+
+### Clean-build Server
+
+This performs a clean and rebuild of the server and client cache. Use this as a common troubleshooting step.
+
+### Build Webclient
+
+This bundles a new webclient and copies it into the server to use. Refresh the client page after building.
 
 ## Common Issues
 

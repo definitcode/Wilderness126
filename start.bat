@@ -41,24 +41,30 @@ if not exist engine (
 	goto startProj
 )
 
-echo 1. Start
-echo 2. Update
+echo 1. Start Server
+echo 2. Start Server (engine dev)
+echo 3. Update Source
 if exist engine\.env (
-    echo 3. Reconfigure
+    echo 4. Reconfigure Server
 ) else (
-    echo 3. Configure
+    echo 4. Configure Server
 )
-echo 4. Clean and Build
-set /p "action=> "
+echo 5. Clean-build Server
+echo 6. Build Webclient
+set /p "action=> " || cmd /c exit -1073741510
 
 if %action% == 1 (
     goto startProj
 ) else if %action% == 2 (
-    goto updateProj
+    goto startProjDev
 ) else if %action% == 3 (
-    goto reconfigureProj
+    goto updateProj
 ) else if %action% == 4 (
+    goto reconfigureProj
+) else if %action% == 5 (
     goto rebuildProj
+) else if %action% == 6 (
+    goto buildClient
 )
 
 cls
@@ -68,7 +74,7 @@ goto index
 :selectVer
 echo Please select a game version - use the number to confirm your option:
 echo 225. May 18, 2004
-set /p "rev=> "
+set /p "rev=> " || cmd /c exit -1073741510
 
 if %rev% == 225 (
     goto downloadVer
@@ -99,6 +105,21 @@ if not exist .env (
 start bun start
 exit
 
+:startProjDev
+if not exist engine (
+    goto selectVer
+)
+
+cd engine
+
+if not exist .env (
+    call bun install
+    call bun run setup
+)
+
+call bun run dev
+exit
+
 :updateProj
 cd engine
 git pull
@@ -126,6 +147,15 @@ goto index
 cd engine
 call bun run clean
 call bun run build
+
+cd ..
+goto index
+
+:buildClient
+cd webclient
+call bun run build
+copy out\client.js ..\engine\public\client\client.js
+copy out\deps.js ..\engine\public\client\deps.js
 
 cd ..
 goto index
