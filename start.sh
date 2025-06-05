@@ -31,4 +31,5 @@ if [ $jver -lt 17 ]; then
 	exit 1
 fi
 
+bun install
 bun run start.ts

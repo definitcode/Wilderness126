@@ -36,4 +36,5 @@ if %jver% lss 170 (
     exit /b
 )
 
+bun install
 bun run start.ts
