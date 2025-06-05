@@ -34,31 +34,6 @@ You can press `ctrl + c` to cancel/quit out of a terminal process.
 
 **Use the start script provided** - it handles a lot of common use cases. We're trying to reduce the barrier to entry by providing an all-inclusive script.
 
-### Start Server
-
-This should be used by most people. It checks for dependency updates and starts the server normally.
-
-### Start Server (engine dev)
-
-This should be used if you're making changes to .ts files and want the server to restart automatically.
-
-### Update Source
-
-This pulls in the latest changes for our repos.
-
-### (Re)configure Server
-
-This runs the configuration setup script for you again.
-
-### Clean-build Server
-
-This performs a clean and rebuild of the server and client cache. Use this as a common troubleshooting step.
-
-### Build Web Client
-
-**Only needed if you are editing the web client!**  
-This bundles a new webclient and copies it into the server to use. Refresh the client page after building.
-
 ## Common Issues
 
 * `bad option: --import`  
