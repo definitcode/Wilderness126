@@ -133,6 +133,10 @@ async function promptConfig() {
             name: '225',
             description: 'May 18, 2004',
             value: '225'
+        }, {
+            name: '244',
+            description: 'June 28, 2004',
+            value: '244'
         }]
     }, { clearPromptOnDone: true });
 
@@ -164,6 +168,10 @@ async function promptAdvanced() {
             name: 'Build Java Client',
             description: '',
             value: 'build-java'
+        }, {
+            name: 'Change Version',
+            description: '',
+            value: 'change-version'
         }, {
             name: 'Back',
             description: 'Go back',
@@ -206,6 +214,13 @@ async function promptAdvanced() {
             stdio: 'inherit',
             cwd: 'javaclient'
         });
+    } else if (choice === 'change-version') {
+        await promptConfig();
+
+        fs.rmSync('engine', { recursive: true, force: true });
+        fs.rmSync('content', { recursive: true, force: true });
+        fs.rmSync('webclient', { recursive: true, force: true });
+        fs.rmSync('javaclient', { recursive: true, force: true });
     }
 }
 
