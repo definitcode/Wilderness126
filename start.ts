@@ -115,10 +115,17 @@ async function main() {
             runOnOs('http://localhost:8888/rs2.cgi');
         }
     } else if (choice === 'java') {
-        child_process.execSync('gradlew run --args="10 0 highmem members"', {
-            stdio: 'inherit',
-            cwd: 'javaclient'
-        });
+        if (config.rev === "225") {
+            child_process.execSync('./gradlew run --args="10 0 highmem members"', {
+                stdio: 'inherit',
+                cwd: 'javaclient'
+            });
+        } else {
+            child_process.execSync('./gradlew run --args="10 0 highmem members 32"', {
+                stdio: 'inherit',
+                cwd: 'javaclient'
+            });
+        }
     } else if (choice === 'advanced') {
         await promptAdvanced();
     } else if (choice === 'quit') {
