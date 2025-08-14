@@ -62,6 +62,12 @@ async function main() {
     }
 
     if (!fs.existsSync('engine/.env')) {
+        child_process.spawnSync('bun install', {
+            shell: true,
+            stdio: 'inherit',
+            cwd: 'engine'
+        });
+
         child_process.spawnSync('bun run setup', {
             shell: true,
             stdio: 'inherit',
@@ -115,10 +121,18 @@ async function main() {
             runOnOs('http://localhost:8888/rs2.cgi');
         }
     } else if (choice === 'java') {
-        child_process.execSync('gradlew run --args="10 0 highmem members"', {
-            stdio: 'inherit',
-            cwd: 'javaclient'
-        });
+        const command = process.platform === 'win32' ? 'gradlew' : './gradlew';
+        if (config.rev === '225') {
+            child_process.execSync(`${command} run --args="10 0 highmem members"`, {
+                stdio: 'inherit',
+                cwd: 'javaclient'
+            });
+        } else {
+            child_process.execSync(`${command} run --args="10 0 highmem members 32"`, {
+                stdio: 'inherit',
+                cwd: 'javaclient'
+            });
+        }
     } else if (choice === 'advanced') {
         await promptAdvanced();
     } else if (choice === 'quit') {
@@ -133,6 +147,10 @@ async function promptConfig() {
             name: '225',
             description: 'May 18, 2004',
             value: '225'
+        }, {
+            name: '244',
+            description: 'June 28, 2004',
+            value: '244'
         }]
     }, { clearPromptOnDone: true });
 
@@ -164,6 +182,10 @@ async function promptAdvanced() {
             name: 'Build Java Client',
             description: '',
             value: 'build-java'
+        }, {
+            name: 'Change Version',
+            description: '',
+            value: 'change-version'
         }, {
             name: 'Back',
             description: 'Go back',
@@ -206,6 +228,13 @@ async function promptAdvanced() {
             stdio: 'inherit',
             cwd: 'javaclient'
         });
+    } else if (choice === 'change-version') {
+        await promptConfig();
+
+        fs.rmSync('engine', { recursive: true, force: true });
+        fs.rmSync('content', { recursive: true, force: true });
+        fs.rmSync('webclient', { recursive: true, force: true });
+        fs.rmSync('javaclient', { recursive: true, force: true });
     }
 }
 
